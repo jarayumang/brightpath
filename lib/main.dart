@@ -1,3 +1,4 @@
+import 'package:brightspot/constants/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -47,10 +48,10 @@ class _NavigationExampleState extends State<NavigationExample> {
   int currentPageIndex = 0;
 
   final List<Widget> pages = const [
-    ProfilePage(),
     ExplorePage(),
-    QuestionsPage(),
     HomePage(),
+    QuestionsPage(),
+    ProfilePage(),
   ];
 
   @override
@@ -63,7 +64,7 @@ class _NavigationExampleState extends State<NavigationExample> {
             currentPageIndex = index;
           });
         },
-        indicatorColor: Colors.amber,
+        indicatorColor: AppColors.lightGreen,
         selectedIndex: currentPageIndex,
         destinations: const <Widget>[
           NavigationDestination(

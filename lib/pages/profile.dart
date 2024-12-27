@@ -3,14 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hugeicons/hugeicons.dart';
-import '../pages/home.dart';
 import 'settings/account_information.dart';
 import 'settings/address_information.dart';
 import 'settings/appearance.dart';
 import 'settings/notification.dart';
 import 'settings/report_issue.dart';
 import 'settings/faq.dart';
-import '../auth/login.dart';
+import 'package:brightspot/auth/login.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
