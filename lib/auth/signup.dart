@@ -1,29 +1,31 @@
-import 'package:brightspot/auth/forgot_password.dart';
-import 'package:brightspot/auth/signup.dart';
+import 'package:brightspot/auth/login.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../main.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:brightspot/constants/colors.dart';
 import 'package:brightspot/services/google_sign_in_services.dart';
 import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _fullNameController = TextEditingController();
 
-  Future<void> _login() async {
-    final user = await SignInServices.signInWithEmailPassword(
+  Future<void> _signup() async {
+    final user = await SignInServices.signUpWithEmailPassword(
       _emailController.text,
       _passwordController.text,
+      _fullNameController.text,
     );
 
     if (user != null) {
@@ -35,12 +37,12 @@ class _LoginScreenState extends State<LoginScreen> {
       IconSnackBar.show(
         context,
         snackBarType: SnackBarType.fail,
-        label: 'Error: Invalid email or password.',
+        label: 'Error creating user',
       );
     }
   }
 
-  Future<void> _googleLogin() async {
+  Future<void> _googleSignIn() async {
     final user = await SignInServices.signInWithGoogle();
 
     if (user != null) {
@@ -69,10 +71,10 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 50, bottom: 30),
+                  padding: const EdgeInsets.only(top: 20, bottom: 10),
                   child: Center(
                     child: SvgPicture.asset(
-                      'assets/login.svg',
+                      'assets/signup.svg',
                       width: 250,
                     ),
                   ),
@@ -81,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   child: Text(
-                    'Login',
+                    'Register',
                     style: GoogleFonts.gabarito(
                       textStyle: const TextStyle(
                           color: AppColors.black,
@@ -93,36 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 buildLoginTextField('Email', _emailController),
                 buildLoginTextField('Password', _passwordController),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    // Aligns the text to the right
-                    child: RichText(
-                      text: TextSpan(
-                        text: 'Forgot Password',
-                        style: GoogleFonts.gabarito(
-                          textStyle: const TextStyle(
-                            color: AppColors.green,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                          ),
-                        ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            // Navigate to the registration page
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ForgotPasswordScreen()),
-                            );
-                          },
-                      ),
-                    ),
-                  ),
-                ),
+                buildLoginTextField('Full Name', _fullNameController),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 5, 20, 10),
                   child: SizedBox(
@@ -136,9 +109,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      onPressed: _login,
+                      onPressed: _signup,
                       child: Text(
-                        'Login',
+                        'Register',
                         style: GoogleFonts.gabarito(
                           textStyle: const TextStyle(
                             color: AppColors.white,
@@ -163,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      onPressed: _googleLogin,
+                      onPressed: _googleSignIn,
                       child: Stack(
                         children: [
                           Align(
@@ -179,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           Center(
                             child: Text(
-                              'Login with Google',
+                              'Register with Google',
                               style: GoogleFonts.gabarito(
                                 textStyle: const TextStyle(
                                   color: AppColors.googleText,
@@ -209,9 +182,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         children: [
-                          TextSpan(text: 'New to Brightspot? '),
+                          const TextSpan(text: 'Joined us before? '),
                           TextSpan(
-                            text: 'Register',
+                            text: 'Login',
                             style: GoogleFonts.gabarito(
                               textStyle: const TextStyle(
                                 color: AppColors.green,
@@ -226,7 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const SignupScreen()),
+                                          const LoginScreen()),
                                 );
                               },
                           ),

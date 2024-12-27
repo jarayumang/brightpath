@@ -13,4 +13,6 @@ class AppColors {
   static const borderGray = Color(0xFFD8D8D8);
   static const errorText = Color(0xFFE62731);
   static const errorBackground = Color(0xFFFFEBEE);
+  static const googleBackground = Color(0xFFF2F2F2);
+  static const googleText = Color(0xFF1F1F1F);
 }
